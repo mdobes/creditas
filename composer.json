@@ -3,7 +3,7 @@
     "type": "library",
     "license": "MIT",
     "description": "Creditas API client",
-    "keywords": ["creditas", "api", "client"],
+    "keywords": ["creditas", "api", "client", "php"],
     "version": "0.0.1",
     "homepage": "https://github.com/mdobes/creditas",
     "authors": [
@@ -20,6 +20,8 @@
         }
     },
     "require": {
+        "php": ">=8",
+        "ext-curl": "*",
         "guzzlehttp/guzzle": "^7.9"
     }
 }

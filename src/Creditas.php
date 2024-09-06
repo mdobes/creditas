@@ -6,6 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use mdobes\Creditas\Exception\ApiException;
+use mdobes\Creditas\Model\AccountDetail;
+use mdobes\Creditas\Model\TransactionsList;
 
 class Creditas
 {
@@ -16,7 +18,7 @@ class Creditas
 
     public function __construct(string $authorizationToken, string $accountId)
     {
-        $this->apiUrl = 'https://api.creditas.cz/oam/v1/account/';
+        $this->apiUrl = 'https://api.creditas.cz/oam/v1/';
         $this->authorizationToken = $authorizationToken;
         $this->accountId = $accountId;
 
@@ -62,17 +64,50 @@ class Creditas
         }
     }
 
+
     /**
      * @throws ApiException
      */
-    public function getAccountDetails(): \stdClass
+    public function getCurrentAccountDetail(): AccountDetail
     {
         $data = [
             'accountId' => $this->accountId
         ];
 
-        return $this->sendPostRequest($data, 'current/get');
+        $response = $this->sendPostRequest($data, 'account/current/get');
 
+        return new AccountDetail($response->currentAccount);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public function getSavingsAccountDetail(): AccountDetail
+    {
+        $data = [
+            'accountId' => $this->accountId
+        ];
+
+        $response = $this->sendPostRequest($data, 'account/savings/get');
+
+        return new AccountDetail($response->savingsAccount);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public function getTransactions(int $pageIndex = 0, array $filter = [], ?int $pageItemCount = 20): TransactionsList
+    {
+        $data = [
+            'accountId' => $this->accountId,
+            'filter' => $filter,
+            'pageItemCount' => $pageItemCount,
+            'pageIndex' => $pageIndex
+        ];
+
+        $response = $this->sendPostRequest($data, 'account/transaction/search');
+
+        return new TransactionsList($response);
     }
 
 }
