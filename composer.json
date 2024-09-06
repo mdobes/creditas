@@ -1,0 +1,25 @@
+{
+    "name": "mdobes/creditas",
+    "type": "library",
+    "license": "MIT",
+    "description": "Creditas API client",
+    "keywords": ["creditas", "api", "client"],
+    "version": "0.0.1",
+    "homepage": "https://github.com/mdobes/creditas",
+    "authors": [
+        {
+            "name": "Michal Dobeš",
+            "email": "michal@dobes.dev",
+            "homepage": "https://dobes.dev",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "mdobes\\Creditas\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
+}
