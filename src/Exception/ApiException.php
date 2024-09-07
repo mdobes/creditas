@@ -17,6 +17,11 @@ class ApiException extends \Exception
 
     private function formatMessage(string $message, int $code): string
     {
+
+        if ($code === 503) {
+            return "Service is unavailable";
+        }
+
         $codeName = $this->responseBody->name;
         $errorMessage = null;
 
